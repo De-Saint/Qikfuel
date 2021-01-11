@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{suppliercompanyname}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <form #OrderNowForm="ngForm">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Order Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Name</div>
+          <span ion-text color="primary" class="largetext">{{user?.lastname}}</span>
+          <h5 ion-text class="normaltext">{{user?.firstname}}</h5>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{user?.phone}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Product Ordered For:</div>
+          <span ion-text color="primary">{{producttype}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Product Ordered From:</div>
+          <span ion-text color="primary">{{suppliercompanyname}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Price</div>
+          <span ion-text color="primary" id="pprice">{{supplierproductprice}}</span>
+        </ion-item>
+        <div *ngIf="producttype === 'Cooking Gas'">
+          <ion-item>
+            <div class="desc">Quantity</div>
+            <span ion-text color="primary" id="pprice">{{productquantity}}kg</span>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <div class="desc margin">Transaction Type</div>
+            <ion-label floating class="normaltext">Transaction Type</ion-label>
+            <ion-select [(ngModel)]="request.transactiontype" placeholder="Transaction Type" id="transactiontype" name="transactiontype"
+              required>
+              <ion-option value="Refill">Refill</ion-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div *ngIf="producttype !== 'Cooking Gas'">
+          <ion-item class="border half-margintop">
+            <div class="desc margin">Quantity</div>
+            <div class="margin">You can change the quantity</div>
+            <ion-input [(ngModel)]="request.quantity" (ngModelChange)="onChangeLitre($event)" id="requestquantity" value="{{productquantity}}"
+              type="number" placeholder="New Litres" name="quantity" max="5000000" required>
+            </ion-input>
+          </ion-item>
+        </div>
+        <ion-item>
+          <div class="">Amount</div>
+          <div ion-text class="" id="pamount" color="primary">{{amount | currency: 'NGN': '1.2-2'}}</div>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <div class="desc margin padding">Delivery Schedule</div>
+          <ion-label floating class="normaltext">Delivery types</ion-label>
+          <ion-select [(ngModel)]="request.deliverytype" id="deliverytype" name="deliverytype" required (ngModelChange)="onSelect($event)">
+            <ion-option value="Instance">Instant Delivery</ion-option>
+            <ion-option value="Schedule">Schedule Delivery</ion-option>
+          </ion-select>
+        </ion-item>
+        <div hidden id="deliveryd">
+          <ion-item class="border half-margintop">
+            <ion-label>Pick Delivery Date</ion-label>
+            <ion-datetime displayFormat="MMM DD YYYY" min="2017" max="2030-12-31" [(ngModel)]="request.deliverydate" ngControl="deliverydate"
+              id="deliverydate" name="deliverydate" #deliverydate="ngModel"></ion-datetime>
+          </ion-item>
+        </div>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider color="primary" class="normaltext ">Choose Delivery Address</ion-item-divider>
+      <ion-list radio-group [(ngModel)]="request.myaddress" name="myaddress" (ngModelChange)="checkaddress($event)">
+        <ion-item>
+          <ion-label>Use my registered address</ion-label>
+          <ion-radio value="registered" [checked]=true></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Type your address</ion-label>
+          <ion-radio value="typeaddress"></ion-radio>
+        </ion-item>
+        <ion-item id="raddress" [hidden]=true>
+          <span class="marginleft wrap normaltext">{{regaddress}}</span>
+        </ion-item>
+        <ion-item class="border mini-margintop" [hidden]=true id="typeAddress">
+          <ion-input type="text" name="typepaddress" [(ngModel)]="request.typepaddress" class="mediumtext" placeholder="specify delivery address"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider color="primary" class="normaltext ">Choose Payment Plan on Delivery</ion-item-divider>
+      <ion-list radio-group [(ngModel)]="request.paymentplan" name="paymentplan" required>
+        <ion-item>
+          <ion-label>Pay with POS</ion-label>
+          <ion-radio value="Pay With POS" checked=true></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Pay with Cash</ion-label>
+          <ion-radio value="Pay With Cash" ></ion-radio>
+        </ion-item>
+      </ion-list>
+    </ion-item-group>
+    <div class="padding center margintop bordertop">
+      <button ion-button round medium (click)="CancelOrder()">Cancel Order</button>
+      <button ion-button round medium type="submit" (click)="OrderNow(OrderNowForm)">Order Now</button>
+    </div>
+  </form>
+  <div #map id="map" [hidden]=true></div>
+</ion-content>

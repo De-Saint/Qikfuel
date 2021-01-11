@@ -1,0 +1,192 @@
+<ion-content class="wallpaper">
+  <div class="center">
+    <img src="assets/img/icon.png">
+  </div>
+  <ion-card>
+    <ion-card-content>
+      <div class="normaltext center">Add Product</div>
+      <ion-item-group>
+        <ion-item-divider color="primary" class="normaltext">Select product to add</ion-item-divider>
+        <div class="mediumtext" ion-text color="primary">Please do not add product that you have already added before</div>
+        <ion-item class="border half-margintop">
+          <ion-label floating class="normaltext">Select product type</ion-label>
+          <ion-select class="" [(ngModel)]="me.pick" name="pick" (ngModelChange)="onSelect($event)" required>
+            <ion-option value="Diesel" class="largetext">Diesel</ion-option>
+            <ion-option value="Petrol" class="largetext">Petrol</ion-option>
+            <ion-option value="Kerosene" class="largetext">Kerosene</ion-option>
+            <ion-option value="Cooking Gas" class="largetext">Cooking Gas</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-item-group>
+      <!--for cooking gas-->
+      <ion-item-group id="gas" *ngIf="g === 'Cooking Gas' && p === '' && d === '' && k === ''">
+        <form #GasForm="ngForm">
+          <ion-item-divider color="primary" class="normaltext margintop">Fill Gas Cylinder Kg and Prices</ion-item-divider>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">5Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size1price" placeholder="Price " ngControl="size1price" type="number" name="size1price" #size1price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">6Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size2price" placeholder="Price " ngControl="size2price" type="number" name="size2price" #size2price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">7Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size3price" placeholder="Price " ngControl="size3price" type="number" name="size3price" #size3price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">8Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size4price" placeholder="Price " ngControl="size1price" type="number" name="size4price" #size4price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">10Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size5price" placeholder="Price " ngControl="size5price" type="number" name="size5price" #size5price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">12.5Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size6price" placeholder="Price " ngControl="size1price" type="number" name="size6price" #size6price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">15Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size7price" placeholder="Price " ngControl="size1price" type="number" name="size7price" #size7price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">20Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size8price" placeholder="Price " ngControl="size8price" type="number" name="size8price" #size8price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">25Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size9price" placeholder="Price " ngControl="size1price" type="number" name="size9price" #size9price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">45Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size10price" placeholder="Price " ngControl="size10price" type="number" name="size10price" #size10price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-label class="normaltext">50Kg</ion-label>
+            <ion-input [(ngModel)]="gas.size11price" placeholder="Price " ngControl="size1price" type="number" name="size11price" #size11price="ngModel"
+              >
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="border half-margintop">
+            <ion-input [(ngModel)]="gas.totalquantity" placeholder="specify total Gas quantity in Kg" ngControl="totalquantity" type="number"
+              name="totalquantity" #totalquantity="ngModel" required>
+            </ion-input>
+          </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-input [(ngModel)]="gas.minquantity" placeholder="specify minimum Kg you can supply" ngControl="minquantity" type="number"
+              required name="minquantity" #minquantity="ngModel">
+            </ion-input>
+          </ion-item>
+          <div padding>
+            <button ion-button block (click)="onAddGas(GasForm)" type="submit" id="createbtn"  tappable block [disabled]="!GasForm.valid">Add Cooking Gas</button>
+          </div>
+        </form>
+      </ion-item-group>
+
+      <!--for kerosene-->
+      <ion-item-group id="kerosene" *ngIf="k === 'Kerosene'  && p === '' && d === '' && g === ''">
+        <ion-item-divider class="normaltext margintop" color="primary">Add Product [Kerosene]</ion-item-divider>
+        <div text-justify class="normaltext  lineup half-padding">
+          <form #UpdateKeroseneForm="ngForm">
+            <ion-item class="border half-margintop">
+              <ion-input [(ngModel)]="kero.price" placeholder="Price/litre" ngControl="price" type="number" name="price" #price="ngModel"
+                required>
+              </ion-input>
+            </ion-item>
+            <ion-item class="border half-margintop">
+              <ion-input  class="mediumtext" [(ngModel)]="kero.quantity" placeholder="Specify total kerosene quantity in litres" ngControl="quantity" type="number" name="quantity" #quantity="ngModel"
+                required>
+              </ion-input>
+            </ion-item>
+            <ion-item class="border half-margintop">
+              <ion-input  class="mediumtext" [(ngModel)]="kero.minquantity" placeholder="Specify minimum litres you can supply" ngControl="minquantity" type="number"
+                required name="minquantity" #minquantity="ngModel">
+              </ion-input>
+            </ion-item>
+            <div padding class="center">
+              <button ion-button round medium (click)="onKeroseneUpdate(UpdateKeroseneForm)" type="submit" id="createbtn" tappable block [disabled]="!UpdateKeroseneForm.valid">Add Kerosene</button>
+            </div>
+          </form>
+        </div>
+      </ion-item-group>
+
+      <!--for Diesel-->
+      <ion-item-group id="diesel" *ngIf="d === 'Diesel' && p === '' && k === '' && g === ''">
+        <ion-item-divider class="normaltext half-margintop" color="primary">Add Product [Diesel]</ion-item-divider>
+        <div text-justify class="normaltext lineup half-padding">
+          <form #UpdateDieselForm="ngForm">
+            <ion-item class="border mini-margintop">
+              <ion-input [(ngModel)]="diese.price" placeholder="Price/litre" ngControl="price" type="number" name="price" #price="ngModel"
+                required>
+              </ion-input>
+            </ion-item>
+            <ion-item class="border half-margintop">
+              <ion-input  class="mediumtext" [(ngModel)]="diese.quantity" placeholder="Specify total diesel quantity in litres" ngControl="quantity" type="number" required name="quantity"
+                #quantity="ngModel">
+              </ion-input>
+            </ion-item>
+            <ion-item class="border half-margintop">
+              <ion-input  class="mediumtext" [(ngModel)]="diese.minquantity" placeholder="Specify minimum litres you can supply" ngControl="minquantity" type="number"
+                required name="minquantity" #minquantity="ngModel">
+              </ion-input>
+            </ion-item>
+            <div padding class="center">
+              <button ion-button round medium (click)="onDieselUpdate(UpdateDieselForm)" type="submit" id="createbtn" tappable block [disabled]="!UpdateDieselForm.valid" >Add Diesel</button>
+            </div>
+          </form>
+        </div>
+      </ion-item-group>
+      <!--for Petrol-->
+      <ion-item-group id="petrol" *ngIf="p === 'Petrol'  && d === '' && k === '' && g === ''">
+        <ion-item-divider class="normaltext margintop" color="primary">Add Product [Petrol]</ion-item-divider>
+        <div text-justify class="normaltext lineup half-padding">
+          <form #UpdatePetrolForm="ngForm">
+            <ion-item class="border half-margintop">
+              <ion-input  class="mediumtext" [(ngModel)]="pet.price" placeholder="Price/litre" ngControl="price" type="number" name="price" #price="ngModel"
+                required>
+              </ion-input>
+            </ion-item>
+            <ion-item class="border half-margintop">
+              <ion-input [(ngModel)]="pet.quantity" placeholder="Specify total petrol quantity in litres" ngControl="quantity" type="number" name="quantity" #quantity="ngModel"
+                required>
+              </ion-input>
+            </ion-item>
+          <ion-item class="border half-margintop">
+            <ion-input class="mediumtext" [(ngModel)]="pet.minquantity" placeholder="Specify minimum litres you can supply" ngControl="minquantity" type="number"
+              required name="minquantity" #minquantity="ngModel">
+            </ion-input>
+          </ion-item>
+            <div padding class="center">
+              <button ion-button round medium (click)="onPetrolUpdate(UpdatePetrolForm)" type="submit" id="createbtn" tappable block [disabled]="!UpdatePetrolForm.valid">Add Petrol</button>
+            </div>
+          </form>
+        </div>
+      </ion-item-group>
+      <ion-fab top right>
+        <button ion-fab mini (click)="ShowBack()"><ion-icon name="arrow-back"></ion-icon></button>
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Place Order</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="marginleft marginright paddingright paddingleft margintop" id="placeorderform">
+    <div class="formcontent">
+      <form [formGroup]="OrderForm" (ngSubmit)="OnOrderForm()" novalidate>
+        <ion-item-group>
+          <ion-item-divider color="primary" class="normaltext ">Find Supplier by</ion-item-divider>
+          <ion-item  *ngFor="let sta of states" class="border half-margintop half-marginbottom">
+            <ion-label floating class="normaltext">States</ion-label>
+            <ion-select  formControlName="state" color="primary" (ngModelChange)="onStateSelect($event)" placeholder="select state">
+              <ion-option *ngFor="let state of sta" value="{{ state.id }}">{{ state.state}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngFor="let lg of lgas" class="border half-margintop">
+            <ion-label floating class="normaltext">LGAs</ion-label>
+            <ion-select formControlName="lga"  placeholder="select lga">
+              <ion-option *ngFor="let lga of lg" value="{{ lga.id }}">{{ lga.lga}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="border half-margintop half-marginbottom" id="town" [hidden]=true>
+            <ion-input formControlName="town" type="text"  class="mediumtext" placeholder="Specify town" >
+            </ion-input>
+          </ion-item>
+        </ion-item-group>
+        <ion-item-group>
+          <ion-item-divider color="primary" class="normaltext">Fill Order Details</ion-item-divider>
+          <ion-item class="border mini-margintop">
+            <ion-label floating class="normaltext">Select Product Type</ion-label>
+            <ion-select  formControlName="producttype" placeholder="Product Type" (ngModelChange)="onSelect($event)">
+              <ion-option value="Diesel" class="largetext">Diesel</ion-option>
+              <ion-option value="Petrol" class="largetext">Petrol</ion-option>
+              <ion-option value="Kerosene" class="largetext">Kerosene</ion-option>
+              <ion-option value="Cooking Gas" class="largetext">Cooking Gas</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item id="quantity" class="border half-margintop" [hidden]=false>
+            <ion-input formControlName="quantity" placeholder="litres" type="number">
+            </ion-input>
+          </ion-item>
+          <ion-item id="gas" class="border half-margintop" [hidden]=true>
+            <ion-label floating class="normaltext">Select Kg</ion-label>
+            <ion-select class="" formControlName="cookinggasquantity">
+              <ion-option value="5">5kg</ion-option>
+              <ion-option value="6">6kg</ion-option>
+              <ion-option value="7">7kg</ion-option>
+              <ion-option value="8">8kg</ion-option>
+              <ion-option value="10">10kg</ion-option>
+              <ion-option value="12.5">12.5kg</ion-option>
+              <ion-option value="15">15kg</ion-option>
+              <ion-option value="20">20kg</ion-option>
+              <ion-option value="25">25kg</ion-option>
+              <ion-option value="45">45kg</ion-option>
+              <ion-option value="50">50kg</ion-option>
+            </ion-select>
+          </ion-item>
+          <div class="center margintop" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'Admin'">
+            <button ion-button round medium class="margintop" type="submit">Find Supplier</button>
+          </div>
+        </ion-item-group>
+      </form>
+    </div>
+  </div>
+  <div hidden #map id="map"></div>
+</ion-content>

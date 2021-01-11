@@ -1,0 +1,432 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Orders</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="ORDER">
+      <ion-segment-button value="pend" (click)="GetPending()">
+        Pending
+      </ion-segment-button>
+      <ion-segment-button value="deli" (click)="GetDelivered()">
+        Delivered
+      </ion-segment-button>
+      <ion-segment-button value="canc" (click)="GetCancelled()">
+        Cancelled
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div [ngSwitch]="ORDER">
+    <ion-list *ngSwitchCase="'pend'">
+      <ion-searchbar (input)="SearchPendingOrders($event)"></ion-searchbar>
+      <div class="for-user" id="UserOrder" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToDetails(order.orderid, order.producttype)">
+       <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+           <h2 hidden="true">{{order.orderid}}</h2>
+        <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+              <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}} 
+              </ion-col>
+              <ion-col text-right>
+             {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-supplier" id="Supplier" *ngIf="usertype !== 'User' && usertype !== 'Transporter' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToSupDetails(order.orderid, order.producttype ,order.quantity)">
+      <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+           <h2 hidden="true">{{order.orderid}}</h2>
+       <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}}
+              </ion-col>
+              <ion-col text-right>
+             {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-transporter" id="Transporter" *ngIf="usertype !== 'Supplier' && usertype !== 'User' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToTransDetails(order.orderid, order.producttype)">
+       <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+          <h2 hidden="true">{{order.orderid}}</h2>
+       <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}}
+              </ion-col>
+              <ion-col text-right>
+            {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-admin" id="Admin" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'User'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToTransDetails(order.orderid, order.producttyp)">
+       <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+          <h2 hidden="true">{{order.orderid}}</h2>
+         <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}}  
+              </ion-col>
+              <ion-col text-right>
+              {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+        <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="marginleft paddingleft marginright paddingright marginbottom margintop" *ngIf="noorder === 'noorder'">
+        No Order/Request
+      </div>
+      <div *ngIf="noorder === 'none'" class="marginleft paddingleft marginright paddingright marginbottom">
+        <div class="slightly-largetext center bordertop bold half-padding primary " (click)="totop()">
+          Back to Top
+        </div>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="loadmoreorder($event, 'Pending')">
+        <ion-infinite-scroll-content loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
+    <ion-list *ngSwitchCase="'deli'">
+      <ion-searchbar (input)="SearchDeliveredOrders($event)"></ion-searchbar>
+      <div class="for-user" id="UserOrder" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToDetails(order.orderid, order.producttype)">
+      <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+           <h2 hidden="true">{{order.orderid}}</h2>
+        <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+              <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}}
+              </ion-col>
+              <ion-col text-right>
+            {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-supplier" id="Supplier" *ngIf="usertype !== 'User' && usertype !== 'Transporter' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToSupDetails(order.orderid, order.producttype ,order.quantity)">
+      <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+          <h2 hidden="true">{{order.orderid}}</h2>
+       <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+              {{order.status}}
+              </ion-col>
+              <ion-col text-right>
+             {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-transporter" id="Transporter" *ngIf="usertype !== 'Supplier' && usertype !== 'User' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToTransDetails(order.orderid, order.producttype)">
+     <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+           <h2 hidden="true">{{order.orderid}}</h2>
+       <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+              {{order.status}}
+              </ion-col>
+              <ion-col text-right>
+            {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-admin" id="Admin" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'User'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToTransDetails(order.orderid, order.producttyp)">
+     <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+           <h2 hidden="true">{{order.orderid}}</h2>
+         <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}} 
+              </ion-col>
+              <ion-col text-right>
+              {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+        <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="marginleft paddingleft marginright paddingright marginbottom margintop" *ngIf="noorder === 'noorder'">
+        No Order/Request
+      </div>
+      <div *ngIf="noorder === 'none'" class="marginleft paddingleft marginright paddingright marginbottom">
+        <div class="slightly-largetext center bordertop bold half-padding primary " (click)="totop()">
+          Back to Top
+        </div>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="loadmoreorder($event, 'Delivered')">
+        <ion-infinite-scroll-content loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
+    <ion-list *ngSwitchCase="'canc'">
+      <ion-searchbar (input)="SearchCancelledOrders($event)"></ion-searchbar>
+      <div class="for-user" id="UserOrder" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToDetails(order.orderid, order.producttype)">
+    <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+            <h2 hidden="true">{{order.orderid}}</h2>
+        <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+              <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}} 
+              </ion-col>
+              <ion-col text-right>
+             {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-supplier" id="Supplier" *ngIf="usertype !== 'User' && usertype !== 'Transporter' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToSupDetails(order.orderid, order.producttype ,order.quantity)">
+     <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+           <h2 hidden="true">{{order.orderid}}</h2>
+       <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}} 
+              </ion-col>
+              <ion-col text-right>
+            {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-transporter" id="Transporter" *ngIf="usertype !== 'Supplier' && usertype !== 'User' && usertype !== 'Admin'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToTransDetails(order.orderid, order.producttype)">
+      <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+          <h2 hidden="true">{{order.orderid}}</h2>
+       <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+              {{order.status}}
+              </ion-col>
+              <ion-col text-right>
+              {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="for-admin" id="Admin" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'User'">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let order of orders" (click)="GoToTransDetails(order.orderid, order.producttyp)">
+     <ion-avatar item-left>
+            <ion-icon name="cart" item-left></ion-icon>
+          </ion-avatar>
+           <h2 hidden="true">{{order.orderid}}</h2>
+         <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+               <span ion-text color="primary" class="normaltext"> {{order.producttype}}</span> 
+              </ion-col>
+               <ion-col text-right  *ngIf="order.producttype !== 'Cooking Gas'">
+                {{order.quantity}}ltr
+              </ion-col>
+              <ion-col text-right *ngIf="order.producttype == 'Cooking Gas'">
+                {{order.quantity}}kg
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="mediumtext">
+              <ion-col text-left>
+                {{order.status}}
+              </ion-col>
+              <ion-col text-right>
+              {{order.amount | currency: 'NGN': '1.2-2'}}
+              </ion-col>
+            </ion-row>
+        <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+      <div class="marginleft paddingleft marginright paddingright marginbottom margintop" *ngIf="noorder === 'noorder'">
+        No Order/Request
+      </div>
+      <div *ngIf="noorder === 'none'" class="marginleft paddingleft marginright paddingright marginbottom">
+        <div class="slightly-largetext center bordertop bold half-padding primary " (click)="totop()">
+          Back to Top
+        </div>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="loadmoreorder($event, 'Cancelled')">
+        <ion-infinite-scroll-content loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
+  </div>
+
+</ion-content>

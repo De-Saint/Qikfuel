@@ -1,0 +1,65 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+.bar-profile {
+  background-color: #ddd;//ddd
+  padding: 1em 0;
+}
+.profile {
+  z-index: 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+.name {
+  color: #fff;
+  margin-top: 0.5em!important;
+  margin-bottom: 0.5 !important;
+  text-align: center;
+}
+.profile-picture {
+  border-radius: 10%;
+  width: 9em;
+  height: 9em;
+}
+.menu .has-header {
+  top: 100px;
+}
+#menuitem{
+color: #fff;
+padding: 0.1em 3em 0.1em;
+}
+.cntstyle {
+  background-color: #fff;
+  color: #333;
+}
+.cntstyle .list {
+  background-color: transparent;
+}
+.cntstyle .item {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #777;
+}
+.cntstyle .item,
+.cntstyle .item-complex,
+.cntstyle .item-content {
+  background-color: transparent;
+  color: #000;
+  border-color: rgba(0,0,0,0);
+}

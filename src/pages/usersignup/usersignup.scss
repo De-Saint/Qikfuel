@@ -1,0 +1,72 @@
+page-usersignup {
+.wallpaper{
+  background-color: #d85a33;
+}
+img{
+  margin-top: 0;
+  width: 11em;
+  height: 11em;
+}
+.absolute-parent{
+    position: relative;
+}
+.fill{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.blue{
+    background-color: #069;
+}
+.gold{
+    background-color: gold;
+}
+.smalltext{
+    font-size: .5em;
+}
+
+
+.border-bottom{
+    border-bottom: 1px solid #ddd;
+}
+.parts{
+    display: inline-block;
+}
+.round{
+    border-radius: 50%;
+}
+.square{
+    width: 1.2em;
+    height: 1.2em;
+}
+.bigsquare{
+    width: 2.2em;
+    height: 2.2em;
+}
+.margin-vertical{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.margin-horizontal{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+.margin-right{
+    margin-right: 1em;
+}
+.half-margin-right{
+    margin-right: .5em;
+}
+.padding-top{
+    padding-top: 1em;
+}
+
+
+.btn{
+    width: 90%;
+    margin-left: 5%; 
+    margin-right: 5%; 
+}
+}

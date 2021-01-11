@@ -1,0 +1,93 @@
+<ion-content class="wallpaper">
+  <div class="center">
+    <img src="assets/img/icon.png">
+  </div>
+  <ion-card>
+    <ion-card-content>
+      <div class="normaltext center">Create your <span ion-text color="primary"> QikFuel Supplier Account</span></div>
+      <form #SupplierSignupForm="ngForm">
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.dprnumber" placeholder="DPR Number" ngControl="dprnumber" type="text" name="dprnumber"
+            #dprnumber="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.companyname" placeholder="Company Name" ngControl="companyname" type="text" name="companyname"
+            #companyname="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.firstname" placeholder="FirstName" ngControl="firstname" type="text" name="firstname" #firstname="ngModel"
+            required>
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.lastname" placeholder="LastName" ngControl="lastname" type="text" name="lastname" #lastname="ngModel"
+            required>
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.phone" placeholder="Phone" ngControl="phone" type="tel" name="phone" #phone="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.email" placeholder="Email" ngControl="email" type="text" name="email" #email="ngModel"
+            required>
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.password" placeholder="Password" ngControl="password" type="password" name="password" #password="ngModel"
+            required>
+          </ion-input>
+        </ion-item>
+        <ion-item *ngFor="let sta of states" class="border half-margintop">
+          <ion-label floating class="normaltext">Select State</ion-label>
+          <ion-select [(ngModel)]="supsignup.selectedstateid" name="selectedstateid"  #selectedstateid="ngModel"
+            (ngModelChange)="onSelect($event)" required>
+            <ion-option *ngFor="let state of sta" value="{{ state.id }}">{{ state.state}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngFor="let lg of lgas" class="border half-margintop">
+          <ion-label floating class="normaltext">Select LGA</ion-label>
+          <ion-select [(ngModel)]="supsignup.lga"  ngControl="lga" name="lga" #lga="ngModel" required>
+            <ion-option *ngFor="let lga of lg" value="{{ lga.id }}">{{ lga.lga}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="supsignup.town" placeholder="Town" ngControl="town" type="text" name="town" #town="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop half-marginbottom">
+          <ion-input [(ngModel)]="supsignup.street" placeholder="Street" ngControl="street" type="text" name="street" #street="ngModel"
+            required>
+          </ion-input>
+        </ion-item>
+        <ion-item-group>
+          <ion-item-divider color="primary" class="normaltext">Password Recovery</ion-item-divider>
+          <div>
+            <ion-item class="border half-margintop">
+              <ion-label floating class="normaltext">Select Question</ion-label>
+              <ion-select class="" [(ngModel)]="supsignup.question"  ngControl="question" name="question"
+                #question="ngModel">
+                <ion-option value="How old are you?">How old are you?</ion-option>
+                <ion-option value="What is your favourite fruit?">What is your favourite fruit?</ion-option>
+                <ion-option value="What is your pet name?">What is your pet name?</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="border half-margintop">
+              <ion-input [(ngModel)]="supsignup.answer" placeholder="Answer to question" ngControl="answer" type="text" name="answer"
+                #answer="ngModel">
+              </ion-input>
+            </ion-item>
+          </div>
+        </ion-item-group>
+        <div class="margintop">
+          <button ion-button block (click)="onSupplierSignup(SupplierSignupForm)" type="submit" id="createbtn" tappable [disabled]="!SupplierSignupForm.valid">Create Account</button>
+        </div>
+      </form>
+      <ion-fab top right>
+        <button ion-fab mini (click)="ShowRegister()"><ion-icon name="arrow-back"></ion-icon></button>
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

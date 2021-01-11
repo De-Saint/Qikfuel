@@ -1,0 +1,46 @@
+<ion-content class="wallpaper">
+  <div class="center">
+    <img src="assets/img/icon.png">
+  </div>
+  <div class="show" id="signincontainer">
+    <ion-card class="largemargintop marginbottom">
+      <ion-card-content>
+        <div class="mediumtext center">Hi, Sign in with your <span ion-text color="primary"> Qikfuel ID</span></div>
+        <form #loginForm="ngForm">
+          <ion-item class="border-bottom">
+            <ion-label floating>Email / Phone Number</ion-label>
+            <ion-input class="normaltext" type="email" [(ngModel)]="login.emailphone" name="emailphone" required></ion-input>
+          </ion-item>
+          <ion-item class="border-bottom">
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="login.password" name="password" class="normaltext" required #password></ion-input>
+          </ion-item>
+          <ion-checkbox class="smalltext showpassword right" color="primary" checked="false" (click)="showPassword(password)"></ion-checkbox>
+          <div>
+            <button ion-button block (click)="onLogin(loginForm)" type="submit">Sign In</button>
+          </div>
+          <div class="center normaltext paddingtop margintop" ion-text color="primary" (click)="ResetPassword()">Forgot Password?</div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+    <div class="center normaltext whitetext" (click)="ShowSignup()">Don't have an Account? Register here</div>
+  </div>
+  <div class="hide" id="signupcontainer">
+    <ion-card class="largemargintop marginbottom">
+      <ion-card-content>
+        <div class="mediumtext center">Welcome, Create your <span ion-text color="primary"> Qikfuel Account</span></div>
+        <div class="mini-margintop paddingtop">
+          <div class="normaltext center">As</div>
+          <div class="center mediumtext margintop half-marginbottom terms" (click)="ShowTerms2()">By signing up, I agree to <span class="primary">terms and conditions</span></div>
+          <button ion-button block color="primary" class="btn whitetext half-margintop" (click)="ShowUser()">Customer</button>
+        </div>
+        <div class="mini-margintop paddingtop mini-marginbottom">
+          <div class="normaltext center">Or</div>
+          <button ion-button block color="primary" class="btn whitetext" (click)="ShowTerms()">Supplier</button>
+        </div>
+        <div class="center normaltext padding mini-margintop" ion-text color="primary" (click)="ResetPassword()">Forgot Password?</div>
+      </ion-card-content>
+    </ion-card>
+    <div class="center normaltext whitetext" (click)="ShowSignin()">Have an Account? Sign in here</div>
+  </div>
+</ion-content>

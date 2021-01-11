@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>User Guide</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="normaltext half-marginleft half-paddingleft half-marginright half-paddingright half-marginbottom half-margintop for-user"
+    id="UserOrder" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'Admin'">
+    <h5>Customer User Guide</h5>
+    <ol>
+      <li>Click on Place Order</li>
+      <li>Select Supplier based on State, Lga and Town / State and Lga / State and Town</li>
+      <li>Select the product type and input your desire litres / pick from the list if its cooking gas</li>
+      <li>A list of suppliers will be displayed based on search criteria such as Supplier's company name , product type and price</li>
+      <li>You can search the list and select any supplier of your choice</li>
+      <li>A preview of order details</li>
+      <ol>
+        <li>You can change the product quantity</li>
+        <li>Pick Delivery Schedule
+          <ol>
+            <li>Instant Delivery is delivered same day</li>
+            <li>Schedule Delivery is delivered on the date selected</li>
+          </ol>
+        </li>
+        <li>Pick a delivery address</li>
+        <li>Choose a payment plan
+          <ol>
+            <li>Pay with POS</li>
+            <li>Pay with Cash</li>
+          </ol>
+        </li>
+      </ol>
+      <li>An order page is displayed showing your recent orders and their status</li>
+      <li>The Supplier will call you before confirming an order so be careful with all orders placed</li>
+      <li>Please cancel and delete any order NOT sure of or do not place unwanted order(s)</li>
+      <li>You can track the order with the order number on the tracking page to ascertain the status of the product</li>
+      <li>You can call the Transporter once its show "Pending Delivery</li>
+      <li>You are expected to tap the CONFIRM ORDER button to confirm product has been delivered</li>
+      <li>All Confirmed/Delivered orders are in your transactions Page</li>
+      <li>Messages record all that happens on the app</li>
+      <li>None means the person the transaction/order/request was tied to has deleted it</li>
+    </ol>
+    <p>
+      Thanks<br/> Qikfuel Admin
+    </p>
+  </div>
+  <div class="for-supplier normaltext half-marginleft half-paddingleft half-marginright half-paddingright half-marginbottom half-margintop"
+    id="Supplier" *ngIf="usertype !== 'User' && usertype !== 'Transporter' && usertype !== 'Admin'">
+    <h5>User Guide</h5>
+    <ol>
+      <li>Once you have been activated by Qikfuel</li>
+      <li>You can register transporters under you.
+      </li>
+      <li>All transporters registered under you must be activated by you before you can assign request to them</li>
+      <li>You can also deactivate Transporter if need be </li>
+      <li>All your Requests/Orders are shown on the Request Page</li>
+      <li>You can Cancel an Order/Request by providing your reason(s) OR Accept an Order/Request by assigning a transporter to
+        the order</li>
+      <li>You can Call the Customer to confirm order before assigning a Transporter to the Request/Order</li>
+      <li>All Confirmed/Delivered orders are in your transactions Page</li>
+      <li>Keep track of your Supply limit and do well to inform the Admin once Supply Limit is reached</li>
+      <li>Messages record all that happens on the app</li>
+      <li>You are to add product(Petrol, Diesel, Kerosene and cooking gas) after registration and activation of account.
+        <ol>
+          <li>Select product type </li>
+          <li>Specify the price/litre that you are will to deliver</li>
+          <li>Specify the quantity in litres that you want the app to capture</li>
+          <li>Specify the minimum litres you can supply</li>
+        </ol>
+      </li>
+      <li>For Cooking gas input the amount any the kg(s) you are willing to deliver</li>
+      <li>You can Delete and Add a new product</li>
+      <li>You can Increase your total product quantity and also reset the prices for each of the product</li>
+      <li>Account's Page will show your number of transactions and Amount' </li>
+      <li>None means the person the transaction/order/request was tied to has deleted it</li>
+    </ol>
+
+    <p>
+      Thanks<br/> Qikfuel Admin
+    </p>
+  </div>
+  <div class="for-transporter normaltext half-marginleft half-paddingleft half-marginright half-paddingright half-marginbottom half-margintop"
+    id="Transporter" *ngIf="usertype !== 'Supplier' && usertype !== 'User' && usertype !== 'Admin'">
+    <h5>User Guide</h5>
+    <ol>
+      <li>Once you have been activated by your Supplier</li>
+      <li>Request/Order will be assigned to you</li>
+      <li>You are expected to call the Customer until product is delivered</li>
+      <li>You are NOT to tap the Confirm Order button Unless the Customer is not able to and if you do ensure to provide you
+        reason for doing so</li>
+      <li>All Confirmed/Delivered orders are in your transactions Page</li>
+      <li>Messages record all that happens on the app</li>
+      <li>None means the person the transaction/order/request was tied to has deleted it</li>
+    </ol>
+    <p>
+      Thanks<br/> Qikfuel Admin
+    </p>
+  </div>
+  <div class="for-admin normaltext half-marginleft half-paddingleft half-marginright half-paddingright half-marginbottom half-margintop"
+    id="Admin" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'User'">
+    <h5>User Guide</h5>
+    <ol>
+      <li>Activate and Deactive Supplier(s)</li>
+      <li>Set Supplier - Supply Limit (Number of Supply that they can have)</li>
+      <li>Set Supplier - Current Supply Limit (Number of Supply that they have gotten)</li>
+      <li>Delete Accounts - Supplier - User - Transporter</li>
+      <li>View Details of - Supplier - User - Transporter</li>
+      <li>Order's' Page will show list of all Requests/Orders </li>
+      <li>Account's Page will All Transactions and Amount allocated to you' </li>
+      <li>Messages record all that happens on the app</li>
+      <li>None means the person the transaction/order/request was tied to has deleted it</li>
+    </ol>
+    <p>
+      Thanks<br/> Qikfuel Admin
+    </p>
+  </div>
+</ion-content>

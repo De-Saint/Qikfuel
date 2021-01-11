@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order Status</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div>
+    <ion-item class="border-bottom">
+      <ion-searchbar primary [(ngModel)]="queryText" (ionInput)="checkStatus()" name="queryText" placeholder="Enter Order Number"
+        required>
+        </ion-searchbar>
+    </ion-item>
+    <ion-item class="border-bottom">
+      <ion-label class="greyin"> Status </ion-label>
+    </ion-item>
+    <ion-item class="border-bottom">
+      <ion-label placeholder="N/A" class="smallb">{{order}} </ion-label>
+    </ion-item>
+  </div>
+</ion-content>

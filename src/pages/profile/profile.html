@@ -1,0 +1,207 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div id="SupplierProfile" class="for-SupplierProfile" *ngIf="usertype !== 'User' && usertype !== 'Transporter' && usertype !== 'Admin'">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">My Profile</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext">{{supplier?.company_name}}</h2>
+          <h3 class="normaltext bold half-margintop">{{supplier?.firstname}}, {{supplier?.lastname}}</h3>
+          <p class="normaltext">Status: <span ion-text color="primary" class="half-marginleft">{{supplier?.status}}</span></p>
+          <p class="normaltext">Date Joined: <span ion-text color="primary"class="half-marginleft">{{supplier?.date_created}}</span></p>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Email</div>
+          <span ion-text color="primary">{{supplier?.email}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{supplier?.phone}}</span>
+        </ion-item>
+        <ion-item *ngIf="usertype === 'Admin' && usertype === 'Supplier'">
+          <div class="desc">Password</div>
+          <span ion-text color="primary">{{supplier?.password}}</span>
+        </ion-item>
+        <ion-item *ngIf="usertype !== 'Transporter' && usertype !== 'User'">
+          <div class="desc">Number of Supply</div>
+          <span ion-text color="primary">{{supplier?.bookings}}</span>
+        </ion-item>
+        <ion-item *ngIf="usertype !== 'Transporter' && usertype !== 'User'">
+          <div class="desc">Current Number of Supply</div>
+          <span ion-text color="primary">{{supplier?.currentbookings}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">DPR Number</div>
+          <span ion-text color="primary">{{supplier?.dprnumber}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Code</div>
+          <span ion-textcolor="primary">{{supplier?.suppliercode}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Address</div>
+          <span ion-text color="primary">{{supplier?.address}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Transporters Associated With:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let transporter of transporters" (click)="goToTransDetails(transporter.transporterid, transporter.lastname)">
+      <ion-icon name="contact" item-left></ion-icon>
+      <h2 hidden="true">{{transporter.transporterid}}</h2>
+        <ion-row no-padding>
+              <ion-col text-left>
+                {{transporter.firstname}}, {{transporter.lastname}}
+              </ion-col>
+              <ion-col text-right>
+                {{transporter.status}}
+              </ion-col>
+            </ion-row>
+    </button>
+        </ion-list>
+      </div>
+      <div *ngIf="notrans === 'none'" class="marginleft paddingleft marginright paddingright marginbottom">
+        <div class="mediumtext center bordertop bold half-padding primary " (click)="totop()">
+      
+        </div>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="loadmoretransporters($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Products Associated With:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let product of products" (click)="goToProdDetails(product.productid, product.type)">
+      <ion-icon name="color-fill" item-left></ion-icon>
+      <h2 hidden="true">{{product.productid}}</h2>
+        <ion-row no-padding>
+              <ion-col text-left>
+                {{product.type}}
+              </ion-col>
+              <ion-col text-right>
+                {{product.price}}
+              </ion-col>
+            </ion-row>
+    </button>
+        </ion-list>
+      </div>
+    </ion-item-group>
+  </div>
+  <div id="TransporterProfile" class="for-TransporterProfile" *ngIf="usertype !== 'Supplier' && usertype !== 'User' && usertype !== 'Admin'">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">My Profile</ion-item-divider>
+      <div text-justify class="normaltext half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext">{{transporter?.lastname}}</h2>
+          <h3 class="normaltext bold half-margintop">{{transporter?.firstname}}</h3>
+          <p class="normaltext">Activation Status: <span ion-text color="primary" class="half-marginleft">{{transporter?.activationstatus}}</span></p>
+          <p class="normaltext">Date Joined:<span ion-text color="primary" class="half-marginleft">{{transporter?.date_created}}</span></p>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Email</div>
+          <span ion-text color="primary">{{transporter?.email}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{transporter?.phone}}</span>
+        </ion-item>
+       <ion-item *ngIf="usertype === 'Admin' && usertype === 'Transporter'">
+          <div class="desc">Password</div>
+          <span ion-text color="primary">{{transporter?.password}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Engine Number</div>
+          <span ion-text color="primary">{{transporter?.enginenumber}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Plate Number</div>
+          <span ion-text color="primary">{{transporter?.platenumber}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Address</div>
+          <span class="wrap" ion-text color="primary">{{transporter?.address}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Suppliers Associated With:</ion-item-divider>
+      <div text-justify class="normaltext margin lineup half-padding">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let supplier of suppliers" (click)="goToDetails(supplier.supplierid, supplier.lastname)">
+      <ion-icon name="contact" item-left></ion-icon>
+      <h2 hidden="true">{{supplier.supplierid}}</h2>
+        <ion-row no-padding>
+              <ion-col text-left>
+                {{supplier.firstname}}, {{supplier.lastname}}
+              </ion-col>
+            </ion-row>
+    </button>
+        </ion-list>
+      </div>
+    </ion-item-group>
+  </div>
+  <div id="UserProfile" class="for-UserProfile" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'Admin'">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">My Profile</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext">{{customer?.lastname}}, {{customer?.firstname}}</h2>
+          <p class="normaltext">Status:<span ion-text color="primary"class="half-marginleft">{{customer?.status}}</span></p>
+          <p class="normaltext">Date Joined: <span ion-text color="primary" class="half-marginleft">{{customer?.date_created}}</span></p>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Email</div>
+          <span ion-text color="primary">{{customer?.email}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{customer?.phone}}</span>
+        </ion-item>
+        <ion-item *ngIf="usertype === 'Admin' && usertype === 'User'">
+          <div class="desc">Password</div>
+          <span ion-text color="primary">{{customer?.password}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Address</div>
+          <span ion-text class="wrap" color="primary">{{customer?.address}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+  </div>
+  <div id="AdminProfile" class="for-AdminProfile" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'User'">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">My Profile</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext">{{admin?.lastname}}, {{admin?.firstname}}</h2>
+          <p class="normaltext">Status: <span ion-text color="primary" class="half-marginleft">{{admin?.status}}</span></p>
+          <p class="normaltext">Date Joined:<span ion-text color="primary" class="half-marginleft">{{admin?.date_created}}</span></p>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Email</div>
+          <span ion-text color="primary">{{admin?.email}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{admin?.phone}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Address</div>
+          <span ion-text class="wrap" color="primary">{{admin?.address}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+  </div>
+</ion-content>

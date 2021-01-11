@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ptype}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item-group>
+    <ion-item-divider class="normaltext" color="primary">Product Details</ion-item-divider>
+    <div text-justify class="normaltext padding" >Ensure you have added the product before updating</div>
+    <div text-justify class="normaltext lineup half-padding" *ngIf="product?.type !== 'Cooking Gas'">
+      <ion-item>
+        <div class="desc">Type</div>
+        <span ion-text color="primary">{{product?.type}}</span>
+      </ion-item>
+      <form #UpdateForm="ngForm">
+        <ion-item class="lightborder mini-margintop">
+          <ion-label fixed>Price</ion-label>
+          <ion-input [(ngModel)]="update.price" placeholder="Price" ngControl="price" value="{{product?.price}}" type="number" name="price"
+            #price="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item class="lightborder mini-margintop">
+          <ion-label fixed>Total Quantity</ion-label>
+          <ion-input [(ngModel)]="update.quantity" placeholder="Quantity" ngControl="quantity" value="{{product?.quantity}}" type="number"
+            name="quantity" #quantity="ngModel" >
+          </ion-input>
+        </ion-item>
+        <div padding class="center">
+          <button ion-button round medium (click)="onUpdate(UpdateForm)" type="submit" id="createbtn">Update</button>
+        </div>
+      </form>
+    </div>
+
+<!--Cooking Gas-->
+    <div text-justify class="normaltext lineup half-padding" *ngIf="product?.type === 'Cooking Gas'">
+      <form #UpdateForm="ngForm">
+        <ion-item>
+          <div class="desc">Type</div>
+          <span ion-text color="primary">{{product?.type}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Total Quantity</div>
+          <div ion-text color="primary">{{product?.quantity}}</div>
+        </ion-item>
+        <ion-item class="lightborder mini-margintop">
+          <ion-label fixed>Total Quantity</ion-label>
+          <ion-input [(ngModel)]="update.quantity" id="pquantity" placeholder="Type new quantity in litres" ngControl="quantity" value="{{product?.quantity}}"
+            type="number" name="quantity" #quantity="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <div padding class="center">
+          <button ion-button round medium (click)="onUpdate(UpdateForm)" type="submit" id="createbtn">Update</button>
+        </div>
+      </form>
+      <ion-item class="lightborder" *ngFor="let gas of gases">
+        <ion-row no-padding>
+          <ion-col text-left>
+            <span ion-text color="primary" class="normaltext"> Size </span>
+          </ion-col>
+          <ion-col text-center>
+            <span ion-text color="primary" class="normaltext marginright">Price</span>
+          </ion-col>
+          <ion-col text-right>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col text-left>
+            <span class="normaltext" *ngIf="gas.size !== '13'">{{gas.size}}kg</span>
+            <span class="normaltext" *ngIf="gas.size === '13'">12.5kg</span>
+          </ion-col>
+          <ion-col text-center>
+            <span class="normaltext half-marginleft">{{gas.price}}</span>
+          </ion-col>
+          <ion-col text-right>
+            <span class="normaltext bold primarybg whitetext mini-padding half-marginright" (click)="updateGas(gas.gasid,gas.price)">Update</span>
+            <span class="normaltext bold primarybg whitetext  mini-padding half-marginright" (click)="onDeleteGas(gas.gasid)">Delete</span>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </div>
+  </ion-item-group>
+</ion-content>

@@ -1,0 +1,429 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Details</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="DeleteOrder()" *ngIf="order?.status === 'Delivered' ||  order?.status === 'Cancelled'">
+    <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div id="CustomerOrderDetails" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'Admin'">
+    <div text-justify class="normaltext half-padding">
+      <ion-item>
+        <h2 ion-text color="primary" class="largetext" *ngIf="order?.CustomerLastname !== 'none'">{{order?.CustomerLastname}}</h2>
+        <h3 class="normaltext" *ngIf="order?.CustomerFirstname !== 'none'">{{order?.CustomerFirstname}}</h3>
+        <h3 class="normaltext hide">{{order?.CustomerID}}</h3>
+      </ion-item>
+      <ion-item>
+        <div class="desc">Phone</div>
+        <span ion-text color="primary">{{order?.CustomerPhone}}</span>
+      </ion-item>
+    </div>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Order Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc wrap">Payment Plan</div>
+          <span ion-text color="primary">{{order?.paymentplan}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc wrap">Order Number</div>
+          <span ion-text color="primary">{{order?.ordernumber}}</span>
+          <div class="desc wrap">Ensure this Order Number corresponds with that of the Transporter</div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Status</div>
+          <span ion-text color="primary">{{order?.status}}</span><br/>
+          <div ion-text class="wrap" *ngIf="order?.status === 'Delivered'">{{order?.producttype}} was confirmed by {{order?.memberName}} <br/><span>Reason: {{order?.note}}</span></div>
+          <div ion-text class="wrap" *ngIf="order?.status === 'Cancelled'">{{order?.producttype}} was cancelled by {{order?.memberName}}<br/><span>Reason: {{order?.note}}</span></div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Date</div>
+          <span ion-text color="primary">{{order?.deliverydate}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Booked Date</div>
+          <span ion-text color="primary">{{order?.bookeddate}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Booked Time</div>
+          <span ion-text color="primary">{{order?.bookedtime}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Products Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Product Ordered For:</div>
+          <span ion-text color="primary">{{order?.producttype}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Quantity</div>
+          <span ion-text color="primary" *ngIf="order?.producttype !== 'Cooking Gas'">{{order?.quantity}}</span>
+          <span ion-text color="primary" *ngIf="order?.producttype === 'Cooking Gas'">{{order?.quantity}}kg</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Price</div>
+          <span ion-text color="primary">{{order?.price}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Amount</div>
+          <span ion-text color="primary">{{order?.amount | currency: 'NGN': '1.2-2'}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Location</div>
+          <span ion-text color="primary" class="wrap">{{order?.location}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Transporters Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <span class="marginleft" *ngIf="order?.TransLastname === 'none'">Not assigned</span>
+        <ion-item *ngIf="order?.TransLastname !== 'none'">
+          <div class="desc">Transporter Name</div>
+          <h2 ion-text color="primary" class="normaltext">{{order?.TransLastname}}</h2>
+          <h3 class="normaltext">{{order?.TransFirstname}}</h3>
+        </ion-item>
+        <ion-item *ngIf="order?.TransPhone !== 'none'">
+          <div class="desc">Transporter Phone</div>
+          <span ion-text color="primary">{{order?.TransPhone}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Supplier Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding" *ngIf="order?.SupCompanyName !== 'none'">
+        <ion-item>
+          <h2 ion-text color="primary" class="normaltext">{{order?.SupCompanyName}}</h2>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <div text-justify class="normaltext center lineup half-padding lightbordertop">
+      <button ion-button round medium (click)="CancelOrder(order.CustomerID)" *ngIf="order?.status !== 'Delivered' &&  order?.status !== 'Cancelled'">Cancel Order</button>
+      <button ion-button round medium (click)="UserConfirmation(order.CustomerID)" *ngIf="order?.status !== 'Delivered' &&  order?.status !== 'Cancelled' &&  order?.status !== 'Pending Confirmation'">Confirm Order</button>
+    </div>
+  </div>
+  <div id="TransporterOrderDetails" *ngIf="usertype !== 'Supplier' && usertype !== 'User' && usertype !== 'Admin'">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Transporters Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext" *ngIf="order?.TransLastname !== 'none'">{{order?.TransLastname}}</h2>
+          <h3 class="normaltext" *ngIf="order?.TransFirstname !== 'none'">{{order?.TransFirstname}}</h3>
+          <h3 class="normaltext hide" *ngIf="order?.TransFirstname !== 'none'">{{order?.TransID}}</h3>
+        </ion-item>
+        <ion-item *ngIf="order?.TransPhone !== 'none'">
+          <div class="desc">Transporter Phone</div>
+          <span ion-text color="primary">{{order?.TransPhone}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Customer Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext" *ngIf="order?.CustomerLastname !== 'none'">{{order?.CustomerLastname}}</h2>
+          <h3 class="normaltext" *ngIf="order?.CustomerFirstname !== 'none'">{{order?.CustomerFirstname}}</h3>
+        </ion-item>
+        <ion-item *ngIf="order?.CustomerPhone !== 'none'">
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{order?.CustomerPhone}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Order Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc wrap">Payment Plan</div>
+          <span ion-text color="primary">{{order?.paymentplan}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Order Number</div>
+          <span ion-text color="primary">{{order?.ordernumber}}</span>
+          <div class="normaltext wrap">Ensure Order Number corresponds with that of the Customer</div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Status</div>
+          <span ion-text color="primary">{{order?.status}}</span><br/>
+          <div class="wrap" *ngIf="order?.status === 'Delivered'">{{order?.producttype}} was confirmed by {{order?.memberName}} <br/><span>Reason: {{order?.note}}</span></div>
+          <div class="wrap" *ngIf="order?.status === 'Cancelled'">{{order?.producttype}} was cancelled by {{order?.memberName}}<br/><span>Reason: {{order?.note}}</span></div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Status</div>
+          <span ion-text color="primary">{{order?.status}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Date</div>
+          <span ion-text color="primary">{{order?.deliverydate}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Booked Time</div>
+          <span ion-text color="primary">{{order?.bookedtime}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider color="primary" class="normaltext">Products Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Product Ordered For:</div>
+          <span ion-text color="primary">{{order?.producttype}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Quantity</div>
+          <span ion-text color="primary">{{order?.quantity}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Price</div>
+          <span ion-text color="primary">{{order?.price}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Amount</div>
+          <span ion-text color="primary">{{order?.amount | currency: 'NGN': '1.2-2'}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Location</div>
+          <span ion-text color="primary" class="wrap">{{order?.location}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Supplier Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="normaltext" *ngIf="order?.SupCompanyName !== 'none'">{{order?.SupCompanyName}}</h2>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <div text-justify class="normaltext center lineup half-padding" *ngIf="order?.status !== 'Delivered' && order?.status !== 'Pending Confirmation'">
+      <div class="normaltext redtext margin wrap">Tap this button if the <strong>Customer</strong> is not able to</div>
+      <button ion-button round medium (click)="TransporterConfirmation(order.TransID)">Confirm Order</button>
+    </div>
+  </div>
+  <div id="SupplierOrderDetails" *ngIf="usertype !== 'User' && usertype !== 'Transporter' && usertype !== 'Admin'">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Supplier Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="normaltext" *ngIf="order?.SupCompanyName !== 'none'">{{order?.SupCompanyName}}</h2>
+          <h2 ion-text color="primary" class="normaltext hide">{{order?.SupplierID}}</h2>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Customer Details</ion-item-divider>
+      <div text-justify class="normaltext half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext" *ngIf="order?.CustomerLastname !== 'none'">{{order?.CustomerLastname}}</h2>
+          <h3 class="normaltext" *ngIf="order?.CustomerFirstname !== 'none'">{{order?.CustomerFirstname}}</h3>
+        </ion-item>
+        <ion-item *ngIf="order?.CustomerPhone !== 'none'">
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{order?.CustomerPhone}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Order Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc wrap">Payment Plan</div>
+          <span ion-text color="primary">{{order?.paymentplan}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc wrap">Order Number</div>
+          <span ion-text color="primary">{{order?.ordernumber}}</span>
+          <div class="desc wrap">Ensure this Order Number corresponds with that of the Email</div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Status</div>
+          <span ion-text color="primary">{{order?.status}}</span><br/>
+          <div class="wrap" *ngIf="order?.status === 'Delivered'">{{order?.producttype}} was confirmed by {{order?.memberName}} <br/><span>Reason: {{order?.note}}</span></div>
+          <div class="wrap" *ngIf="order?.status === 'Cancelled'">{{order?.producttype}} was cancelled by {{order?.memberName}}<br/><span>Reason: {{order?.note}}</span></div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Date</div>
+          <span ion-text color="primary">{{order?.deliverydate}}</span>
+          <div class="normaltext wrap">Ensure you check this Delivery Date before confirming an Order</div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Booked Date</div>
+          <span ion-text color="primary">{{order?.bookeddate}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Booked Time</div>
+          <span ion-text color="primary">{{order?.bookedtime}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Products Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Product Ordered For:</div>
+          <span ion-text color="primary">{{order?.producttype}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Quantity</div>
+          <span ion-text color="primary">{{order?.quantity}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Price</div>
+          <span ion-text color="primary">{{order?.price}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Amount</div>
+          <span ion-text color="primary">{{order?.amount | currency: 'NGN': '1.2-2'}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Location</div>
+          <span ion-text color="primary" class="wrap">{{order?.location}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Transporters Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding" *ngIf="order?.TransLastname !== 'none'">
+        <ion-item>
+          <div class="desc">Transporter Name</div>
+          <h2 ion-text color="primary" class="normaltext">{{order?.TransLastname}}</h2>
+          <h3 class="normaltext">{{order?.TransFirstname}}</h3>
+        </ion-item>
+        <ion-item *ngIf="order?.TransPhone !== 'none'">
+          <div class="desc">Transporter Phone</div>
+          <span ion-text color="primary">{{order?.TransPhone}}</span>
+        </ion-item>
+      </div>
+      <div text-justify class="normaltext lineup half-padding" *ngIf="order?.TransLastname === 'none'">
+        <span class="marginleft">Not assigned</span>
+        <ion-list>
+          <button ion-item detail-push *ngFor="let transporter of transporters" (click)="goToTransDetails(transporter.transporterid, transporter.lastname, transporter.phone)">
+      <h2 hidden="true">{{transporter.transporterid}}</h2>
+      <h2 hidden="true">{{transporter.phone}}</h2>
+        <ion-row no-padding>
+              <ion-col text-left>
+                {{transporter.lastname}}, {{transporter.firstname}}
+              </ion-col>
+               
+       </ion-row>
+        <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+       <div class="marginleft paddingleft marginright paddingright marginbottom margintop" *ngIf="notrans === 'notrans'">
+        No Transporter(s)
+      </div>
+      <div *ngIf="notrans === 'none'" class="marginleft paddingleft marginright paddingright marginbottom">
+        <div class="mediumtext center bordertop bold half-padding primary" *ngIf="order?.TransLastname !== 'none'">
+        </div>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="loadmoretransporters($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-item-group>
+    <div text-justify class="normaltext center lineup half-padding lightbordertop">
+      <button ion-button round medium (click)="CancelOrder(order.SupplierID)" *ngIf="order?.status !== 'Delivered' &&  order?.status !== 'Cancelled'">Cancel Order</button>
+    </div>
+  </div>
+  <div id="AdminOrderDetails" *ngIf="usertype !== 'Supplier' && usertype !== 'User' && usertype !== 'Transporter'">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Transporters Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <span class="marginleft" *ngIf="order?.TransLastname === 'none'">Has not been assigned</span>
+        <ion-item *ngIf="order?.TransLastname !== 'none'">
+          <div class="desc">Transporter Name</div>
+          <h2 ion-text color="primary" class="normaltext">{{order?.TransLastname}}</h2>
+          <h3 class="normaltext">{{order?.TransFirstname}}</h3>
+        </ion-item>
+        <ion-item *ngIf="order?.TransPhone !== 'none'">
+          <div class="desc">Transporter Phone</div>
+          <span ion-text color="primary">{{order?.TransPhone}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Customer Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext" *ngIf="order?.CustomerLastname !== 'none'">{{order?.CustomerLastname}}</h2>
+          <h3 class="normaltext" *ngIf="order?.CustomerFirstname !== 'none'">{{order?.CustomerFirstname}}</h3>
+        </ion-item>
+        <ion-item *ngIf="order?.CustomerPhone !== 'none'">
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{order?.CustomerPhone}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Order Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc wrap">Payment Plan</div>
+          <span ion-text color="primary">{{order?.paymentplan}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc wrap">Order Number <br/>Ensure Order Number corresponds with that of the Customer</div>
+          <span ion-text color="primary">{{order?.ordernumber}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Status</div>
+          <span ion-text color="primary">{{order?.status}}</span><br/>
+          <div class="wrap" *ngIf="order?.status === 'Delivered'">{{order?.producttype}} was confirmed by {{order?.memberName}} <br/><span>Reason: {{order?.note}}</span></div>
+          <div class="wrap" *ngIf="order?.status === 'Cancelled'">{{order?.producttype}} was cancelled by {{order?.memberName}}<br/><span>Reason: {{order?.note}}</span></div>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Date</div>
+          <span ion-text color="primary">{{order?.deliverydate}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Booked Date</div>
+          <span ion-text color="primary">{{order?.bookeddate}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Booked Time</div>
+          <span ion-text color="primary">{{order?.bookedtime}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Products Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Product Ordered For:</div>
+          <span ion-text color="primary">{{order?.producttype}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Quantity</div>
+          <span ion-text color="primary">{{order?.quantity}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Price</div>
+          <span ion-text color="primary">{{order?.price}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Amount</div>
+          <span ion-text color="primary">{{order?.amount | currency: 'NGN': '1.2-2'}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Delivery Location</div>
+          <span ion-text color="primary" class="wrap">{{order?.location}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Supplier Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="normaltext" *ngIf="order?.SupCompanyName !== 'none'">{{order?.SupCompanyName}}</h2>
+        </ion-item>
+      </div>
+    </ion-item-group>
+
+  </div>
+</ion-content>

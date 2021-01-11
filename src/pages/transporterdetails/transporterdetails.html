@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div id="admin" #admin class="for-admin">
+    <div text-justify class="normaltext half-padding">
+      <ion-item>
+        <h2 ion-text color="primary" class="largetext">{{transporter?.lastname}}</h2>
+        <h3 class="normaltext  half-marginbottom">{{transporter?.firstname}}</h3>
+        <p>Activation Status <span ion-text color="primary">{{transporter?.activationstatus}}</span></p>
+      </ion-item>
+      <ion-item>
+        <div class="desc">Email</div>
+        <span ion-text color="primary">{{transporter?.email}}</span>
+      </ion-item>
+      <ion-item>
+        <div class="desc">Phone</div>
+        <span ion-text color="primary">{{transporter?.phone}}</span>
+      </ion-item>
+    <ion-item *ngIf="usertype === 'Admin'">
+        <div class="desc">Password</div>
+        <span ion-text color="primary">{{transporter?.password}}</span>
+      </ion-item>
+      <ion-item>
+        <div class="desc">Engine Number</div>
+        <span ion-text color="primary">{{transporter?.enginenumber}}</span>
+      </ion-item>
+      <ion-item>
+        <div class="desc">Plate Number</div>
+        <span ion-text color="primary">{{transporter?.platenumber}}</span>
+      </ion-item>
+      <ion-item>
+        <div class="desc">Address</div>
+        <span ion-text color="primary" class="wrap">{{transporter?.address}}</span>
+      </ion-item>
+    </div>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Suppliers Associated With:</ion-item-divider>
+      <div text-justify class="normaltext  lineup mini-padding">
+        <ion-list>
+          <button ion-item detail-push *ngFor="let supplier of suppliers" (click)="goToDetails(supplier.supplierid, supplier.lastname)">
+      <h2 hidden="true">{{supplier.supplierid}}</h2>
+        <ion-row no-padding>
+              <ion-col text-left>
+                {{supplier.company_name}}
+              </ion-col>
+            </ion-row>
+              <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+        </ion-list>
+      </div>
+    </ion-item-group>
+  </div>
+</ion-content>

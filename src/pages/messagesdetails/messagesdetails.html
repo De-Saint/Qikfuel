@@ -1,0 +1,34 @@
+<ion-header>
+<ion-navbar color="primary">
+    <ion-title>{{subject}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="DeleteMessage()">
+    <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <div class="">{{message?.subject}}</div>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="normaltext wrap mini-padding"> {{message?.body}}</div>
+    </ion-card-content>
+    <ion-row>
+      <ion-col text-left>
+        <button ion-button icon-left clear small>
+        <ion-icon name="person"></ion-icon>
+        <div class="small" >{{message?.SenderName}}</div>
+      </button>
+      </ion-col> 
+      <ion-col text-right>
+        <button ion-button icon-left clear small>
+        <ion-icon name="calendar"></ion-icon>
+        <div class="small">{{message?.date}}<span class="half-marginleft">{{message?.time}}</span></div>
+      </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,67 @@
+<ion-content class="wallpaper">
+  <div class="center">
+    <img src="assets/img/icon.png">
+  </div>
+  <ion-card>
+    <ion-card-content>
+      <div class="normaltext center">Edit Profile Details</div>
+      <form #UpdateForm="ngForm">
+        <ion-item class="border mini-margintop">
+          <ion-input [(ngModel)]="update.firstname" placeholder="FirstName" ngControl="firstname" type="text" name="firstname" value="{{fname}}"
+            #firstname="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="update.lastname" placeholder="LastName" ngControl="lastname" type="text" name="lastname" value="{{lname}}"
+            #lastname="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="update.phone" placeholder="Phone" ngControl="phone" type="tel" name="phone" value="{{pho}}" #phone="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="update.email" disabled placeholder="Email" ngControl="email" value="{{ema}}" type="email" name="email" #email="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="update.password" placeholder="Password" ngControl="password" value="{{pass}}" type="password" name="password"
+            #password="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngFor="let sta of states" class="border half-margintop">
+          <ion-label floating class="normaltext">Select State</ion-label>
+          <ion-select [(ngModel)]="update.selectedstateid" name="selectedstateid"  #selectedstateid="ngModel"
+            (ngModelChange)="onSelect($event)" required>
+            <ion-option *ngFor="let state of sta" value="{{ state.id }}">{{ state.state}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngFor="let lg of lgas" class="border half-margintop">
+          <ion-label floating class="normaltext">Select LGA</ion-label>
+          <ion-select [(ngModel)]="update.lga" ngControl="lga"  name="lga"  #lga="ngModel">
+            <ion-option *ngFor="let lga of lg" value="{{ lga.id }}">{{ lga.lga}}</ion-option>
+          </ion-select>
+        </ion-item>
+                <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="update.town" ngControl="town" placeholder="Town" type="text" name="town" #town="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <ion-input [(ngModel)]="update.street" placeholder="Street" ngControl="street" type="text" name="street" #street="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-item class="border half-margintop">
+          <div ion-text color="primary">Registered Address</div>
+          <span class="wrap">{{addre}}</span>
+        </ion-item>
+         <div class="half-margintop">
+          <button ion-button block (click)="onUpdate(UpdateForm)" type="submit" id="createbtn">Update Account</button>
+        </div>
+      </form>
+      <ion-fab top right>
+        <button ion-fab mini (click)="ShowBack()"><ion-icon name="arrow-back"></ion-icon></button>
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

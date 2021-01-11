@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Details</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="DeleteTransaction()">
+    <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div id="">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Transaction Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Status</div>
+          <span ion-text color="primary">{{transaction?.status}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Date</div>
+          <span ion-text color="primary">{{transaction?.date}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Time</div>
+          <span ion-text color="primary">{{transaction?.time}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Description</div>
+          <span ion-text color="primary" class="wrap half-marginright">{{transaction?.description}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Customer Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Name</div>
+          <span ion-text color="primary">{{transaction?.CustomerName}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Transporters Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <div class="desc">Name</div>
+          <span ion-text color="primary">{{transaction?.TransporterName}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Supplier Details:</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="normaltext">{{transaction?.SupCompanyName}}</h2>
+        </ion-item>
+      </div>
+    </ion-item-group>
+
+  </div>
+</ion-content>

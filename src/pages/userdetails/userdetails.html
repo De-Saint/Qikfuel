@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div id="admin" class="for-admin">
+    <ion-item-group>
+      <ion-item-divider class="normaltext" color="primary">Customer Details</ion-item-divider>
+      <div text-justify class="normaltext lineup half-padding">
+        <ion-item>
+          <h2 ion-text color="primary" class="largetext">{{customer?.lastname}}</h2>
+          <h3 class="normaltext half-marginbottom">{{customer?.firstname}}</h3>
+          <p>Status <span ion-text color="primary">{{customer?.status}}</span></p>
+          <p>Date Joined <span ion-text color="primary">{{customer?.date_created}}</span></p>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Email</div>
+          <span ion-text color="primary">{{customer?.email}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Phone</div>
+          <span ion-text color="primary">{{customer?.phone}}</span>
+        </ion-item>
+     <ion-item *ngIf="usertype === 'Admin'">
+          <div class="desc">Password</div>
+          <span ion-text color="primary">{{customer?.password}}</span>
+        </ion-item>
+        <ion-item>
+          <div class="desc">Address</div>
+          <span ion-text color="primary" class="wrap">{{customer?.address}}</span>
+        </ion-item>
+      </div>
+    </ion-item-group>
+  </div>
+</ion-content>

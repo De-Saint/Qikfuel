@@ -1,0 +1,32 @@
+export class orders{
+  supplierid: number;
+  customerid: any;
+  transportid: any;
+  producttype: any;
+  quantity: any;
+  price: any;
+  location : any;
+  bookeddate: any;
+  bookedtime: any;
+  deliverydate: Date;
+  status: any;
+  orderid: any;
+  customerName: any;
+  customerPhone: any;
+  TransLastname: any;
+  TransFirstname: any;
+  TransPhone: any;
+  TransID: any;
+  amount: any;
+  SupCompanyName: any;
+  CustomerLastname: any;
+  CustomerFirstname;any;
+  CustomerPhone:any;
+  CustomerID:any;
+  ordernumber: any;
+  SupplierID:any;
+  paymentplan: any;
+  memberName:any;
+  note:any;
+  count: any;
+}

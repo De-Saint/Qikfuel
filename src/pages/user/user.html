@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Customers</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-searchbar (input)="SearchUsers($event)"></ion-searchbar>
+  <div class="for-admin">
+    <ion-list>
+      <button ion-item detail-push *ngFor="let user of users" (click)="goToDetails(user.userid, user.lastname)">
+      <ion-avatar item-left>
+            <ion-icon name="contacts" item-left></ion-icon>
+          </ion-avatar><h2 hidden="true">{{user.userid}}</h2>
+        <ion-row no-padding>
+              <ion-col text-left>
+                {{user.lastname}}, {{user.firstname}}
+              </ion-col>
+       </ion-row>
+        <ion-row no-padding>
+              <ion-col text-left class="mediumtext">
+                {{user.status}}
+              </ion-col>
+       </ion-row>
+         <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+    </ion-list>
+    <div class="marginleft paddingleft marginright paddingright marginbottom margintop" *ngIf="nouser === 'nouser'">
+      No User
+    </div>
+  </div>
+  <div *ngIf="nouser === 'none'" class="marginleft paddingleft marginright paddingright marginbottom">
+    <div class="slightly-largetext center bordertop bold half-padding primary " (click)="totop()">
+      Back to Top
+    </div>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="loadmoreusers($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

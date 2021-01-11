@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Available Suppliers</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="for-admin">
+    <ion-searchbar [(ngModel)]="searchQuery" (input)="SearchSuppliers($event)"></ion-searchbar>
+    <ion-list>
+      <button ion-item detail-push *ngFor="let supplier of supplierlist" (click)="GoToDetails(supplier.supplierid, supplier.company_name, supplier.SuppplierPrice, supplier.SupplierDeviceToken)">
+      <ion-avatar item-left>
+            <ion-icon name="contacts" item-right></ion-icon>
+          </ion-avatar>
+          <h2 hidden="true">{{supplier.supplierid}}</h2>
+        <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+                {{supplier.company_name}}
+              </ion-col>
+              <ion-col text-right>
+                <span *ngIf="producttype !== 'Cooking Gas'">{{productquantity}}</span>
+                <span *ngIf="producttype === 'Cooking Gas'">{{productquantity}}kg</span>
+              </ion-col>
+            </ion-row>
+        <ion-row no-padding class="normaltext">
+              <ion-col text-left>
+                {{producttype}}
+              </ion-col>
+              <ion-col text-right>
+                <span *ngIf="producttype !== 'Cooking Gas'">{{supplier.SuppplierPrice | currency: 'NGN': '1.2-2'}}/lit</span>
+                <span *ngIf="producttype === 'Cooking Gas'">{{supplier.SuppplierPrice | currency: 'NGN': '1.2-2'}}</span>
+              </ion-col>
+            </ion-row>
+               <ion-icon name="arrow-dropright" item-right></ion-icon>
+    </button>
+    </ion-list>
+    <div class="marginleft paddingleft marginright paddingright marginbottom margintop slightly-largetext" *ngIf="nosup === 'empty'">
+      Sorry, we do not have supplier(s) for selected location yet:::please search/select another location
+    </div>
+  </div>
+  <div *ngIf="nosup === 'none'"  class="marginleft paddingleft marginright paddingright marginbottom">
+    <div class="slightly-largetext center bordertop bold half-padding primary " (click)="totop()">
+      Back to Top
+    </div>
+  </div>
+   <ion-infinite-scroll (ionInfinite)="loadmoresup($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

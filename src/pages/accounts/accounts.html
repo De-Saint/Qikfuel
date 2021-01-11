@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Accounts</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-header color="primary">
+      <b> My Account</b>
+    </ion-card-header>
+    <ion-card-content class="mini-flow">
+      <div class="for-supplier" id="Supplier" *ngIf="usertype !== 'User' && usertype !== 'Transporter' && usertype !== 'Admin'">
+        <ion-item>
+          <ion-label>Total Number of Transactions</ion-label>
+          <ion-badge item-right class="newColor" *ngIf="noamount"><span>&#8358;</span>0</ion-badge>
+          <ion-badge item-right class="newColor"> {{transactionnumber}}</ion-badge>
+          <!--{{num | currency:'USD':true:'1.2-2'}}-->
+        </ion-item>
+        <ion-item>
+          <ion-label>Total Balance</ion-label>
+          <ion-badge item-right class="newColor" *ngIf="totalbalance === ''"><span>&#8358;</span> 0</ion-badge>
+          <ion-badge item-right class="newColor">{{totalbalance | currency: 'NGN': '1.2-2'}}</ion-badge>
+        </ion-item>
+      </div>
+      <div class="for-admin" id="Admin" *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'User'">
+        <ion-item>
+          <ion-label>Total Number of Transactions</ion-label>
+          <ion-badge item-right class="newColor" *ngIf="noamount"><span>&#8358;</span>0</ion-badge>
+          <ion-badge item-right class="newColor"> {{transactionnumber}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>Total Balance</ion-label>
+          <ion-badge item-right class="newColor" *ngIf="totalbalance === ''"><span>&#8358;</span> 0</ion-badge>
+          <ion-badge item-right class="newColor">{{totalbalance | currency: 'NGN': '1.2-2'}}</ion-badge>
+        </ion-item>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="usertype !== 'Supplier' && usertype !== 'Transporter' && usertype !== 'User'">
+    <ion-card-header color="primary">
+      <b>Stats</b>
+    </ion-card-header>
+    <ion-card-content class="mini-flow">
+      <div class="for-admin" id="Admin">
+        <ion-item>
+          <ion-label>Total Number of Suppliers</ion-label>
+          <ion-badge item-right class="newColor"> {{totalsuppliers}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label class="marginleft">Activated Suppliers</ion-label>
+          <ion-badge item-right class="newColor"> {{totalactivatedsuppliers}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label class="marginleft">Non-Activated Suppliers</ion-label>
+          <ion-badge item-right class="newColor"> {{totalnonactivatedsuppliers}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>Total Number of Transporters</ion-label>
+          <ion-badge item-right class="newColor"> {{totaltransporters}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label class="marginleft">Activated Transporters</ion-label>
+          <ion-badge item-right class="newColor"> {{totalactivatedtransporters}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label class="marginleft">Non-Activated Transporters</ion-label>
+          <ion-badge item-right class="newColor"> {{totalnonactivatedtransporters}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>Total Number of Customers</ion-label>
+          <ion-badge item-right class="newColor"> {{totalcustomers}}</ion-badge>
+        </ion-item>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

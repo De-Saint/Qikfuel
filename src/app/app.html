@@ -1,0 +1,98 @@
+<!-- logged out menu -->
+<ion-menu id="loggedOutMenu" [content]="content" swipeEnabled="false">
+  <ion-header>
+    <ion-toolbar color="primary" class="bar-profile">
+      <div class="profile">
+        <img class="profile-picture" src="assets/img/icon.png">
+        <h4 class="name">Guest</h4>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="outer-content cntstyle">
+    <ion-list>
+      <button ion-item menuClose *ngFor="let p of loggedOutPages" (click)="openPage(p)">
+        <ion-icon item-left [name]="p.icon" [color]="isActive(p)"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- logged in As User menu -->
+<ion-menu id="loggedInUserMenu" [content]="content" swipeEnabled="false">
+  <ion-header>
+    <ion-toolbar color="primary" class="bar-profile">
+      <div class="profile">
+        <img class="profile-picture" src="assets/img/icon.png">
+        <h4 class="name neg-margintop">{{Userfullname}}</h4>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="outer-content cntstyle">
+    <ion-list>
+      <button ion-item menuClose *ngFor="let p of loggedInUserPages" (click)="openPage(p)">
+        <ion-icon item-left [name]="p.icon" [color]="isActive(p)"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- logged in As Admin menu -->
+<ion-menu id="loggedInAdminMenu" [content]="content" swipeEnabled="false">
+  <ion-header>
+    <ion-toolbar color="primary" class="bar-profile">
+      <div class="profile">
+        <img class="profile-picture" src="assets/img/icon.png">
+        <h4 class="name neg-margintop">{{Userfullname}}</h4>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="outer-content cntstyle">
+    <ion-list>
+      <button ion-item menuClose *ngFor="let p of loggedInAdminPages" (click)="openPage(p)">
+        <ion-icon item-left [name]="p.icon" [color]="isActive(p)"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- logged in As Supplier menu -->
+<ion-menu id="loggedInSupplierMenu" [content]="content" swipeEnabled="false">
+  <ion-header>
+    <ion-toolbar color="primary" class="bar-profile">
+      <div class="profile">
+        <img class="profile-picture" src="assets/img/icon.png">
+         <h4 class="name neg-margintop">{{Userfullname}}</h4>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="outer-content cntstyle">
+    <ion-list>
+      <button ion-item menuClose *ngFor="let p of loggedInSupplierPages"  (click)="openPage(p)">
+        <ion-icon item-left [name]="p.icon" [color]="isActive(p)"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- logged in As Transporter menu -->
+<ion-menu id="loggedInTransporterMenu" [content]="content" swipeEnabled="false">
+  <ion-header>
+    <ion-toolbar color="primary" class="bar-profile">
+      <div class="profile">
+        <img class="profile-picture" src="assets/img/icon.png">
+         <h4 class="name neg-margintop">{{Userfullname}}</h4>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="outer-content cntstyle">
+    <ion-list>
+      <button ion-item menuClose *ngFor="let p of loggedInTransporterPages" (click)="openPage(p)">
+        <ion-icon item-left [name]="p.icon" [color]="isActive(p)"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- main navigation -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
